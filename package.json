@@ -60,6 +60,7 @@
         "@ai-sdk/openai": "^2.0.44",
         "@ai-sdk/openai-compatible": "^1.0.26",
         "@jupyter/chat": "^0.18.2",
+        "@mymediset/sap-ai-provider": "github:tha2015/sap-ai-provider",
         "@jupyterlab/application": "^4.0.0",
         "@jupyterlab/apputils": "^4.5.6",
         "@jupyterlab/cells": "^4.4.6",

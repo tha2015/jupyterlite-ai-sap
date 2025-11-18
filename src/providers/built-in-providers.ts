@@ -8,6 +8,78 @@ import type { IProviderInfo } from '../tokens';
 import type { IModelOptions } from './models';
 
 /**
+ * SAP AI Core provider
+ */
+export const sapProvider: IProviderInfo = {
+  id: 'sap',
+  name: 'SAP AI Core',
+  apiKeyRequirement: 'required',
+  defaultModels: [
+    // OpenAI models
+    'gpt-4',
+    'gpt-4o',
+    'gpt-4o-mini',
+    'gpt-4.1',
+    'gpt-4.1-mini',
+    'gpt-4.1-nano',
+    'o1',
+    'o1-mini',
+    'o3',
+    'o3-mini',
+    'o4-mini',
+    // Anthropic Claude models
+    'anthropic--claude-3-haiku',
+    'anthropic--claude-3-sonnet',
+    'anthropic--claude-3-opus',
+    'anthropic--claude-3.5-sonnet',
+    'anthropic--claude-3.7-sonnet',
+    'anthropic--claude-4-sonnet',
+    'anthropic--claude-4-opus',
+    'anthropic--claude-4.5-sonnet',
+    // Google Gemini models
+    'gemini-1.5-pro',
+    'gemini-1.5-flash',
+    'gemini-2.0-pro',
+    'gemini-2.0-flash',
+    'gemini-2.0-flash-thinking',
+    'gemini-2.0-flash-lite',
+    'gemini-2.5-pro',
+    'gemini-2.5-flash',
+    // Amazon models
+    'amazon--nova-premier',
+    'amazon--nova-pro',
+    'amazon--nova-lite',
+    'amazon--nova-micro',
+    'amazon--titan-text-lite',
+    'amazon--titan-text-express',
+    // Other models
+    'alephalpha-pharia-1-7b-control',
+    'meta--llama3-70b-instruct',
+    'meta--llama3.1-70b-instruct',
+    'mistralai--mistral-large-instruct',
+    'mistralai--mistral-small-instruct',
+    'mistralai--pixtral-large-instruct',
+    'ibm--granite-13b-chat'
+  ],
+  supportsBaseURL: true,
+  factory: (options: IModelOptions) => {
+    // Note: SAP provider is handled specially in agent.ts _createModel()
+    // using createSAPAIProvider directly due to async OAuth token requirements.
+    // This factory returns a stub model that should never be used in practice,
+    // as all SAP provider calls are intercepted before reaching this factory.
+    //
+    // Using OpenAI-compatible provider as a stub to satisfy the type system.
+    const model = options.model || 'gpt-4o';
+    return createOpenAICompatible({
+      name: 'sap',
+      baseURL: options.baseURL || 'https://api.ai.ml.hana.ondemand.com/v2',
+      apiKey: options.apiKey || '',
+      headers: options.headers
+    })(model);
+  }
+};
+
+/**
  * Anthropic provider
  */
 export const anthropicProvider: IProviderInfo = {

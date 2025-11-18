@@ -8,6 +8,7 @@ import {
   StreamedRunResult,
   user
 } from '@openai/agents';
+import { aisdk } from '@openai/agents-extensions';
 import { ISecretsManager } from 'jupyter-secrets-manager';
 
 import { BrowserMCPServerStreamableHttp } from './mcp/browser';
@@ -895,6 +896,16 @@ export class AgentManager {
         )?.value ?? '';
     } else {
       apiKey = this._settingsModel.getApiKey(activeProviderConfig.id);
+    }
+
+    // Special handling for SAP AI Core provider
+    if (provider === 'sap') {
+      const { createSAPAIProvider } = await import('@mymediset/sap-ai-provider');
+      const sapProvider = await createSAPAIProvider({
+        serviceKey: apiKey,
+        ...(baseURL && { baseURL })
+      });
+      return aisdk(sapProvider(model));
     }
 
     return createModel(

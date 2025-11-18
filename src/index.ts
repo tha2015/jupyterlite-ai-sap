@@ -70,6 +70,7 @@ import {
 } from './tokens';
 
 import {
+  sapProvider,
   anthropicProvider,
   googleProvider,
   mistralProvider,
@@ -201,6 +202,19 @@ const genericProviderPlugin: JupyterFrontEndPlugin<void> = {
   requires: [IProviderRegistry],
   activate: (app: JupyterFrontEnd, providerRegistry: IProviderRegistry) => {
     providerRegistry.registerProvider(genericProvider);
+  }
+};
+
+/**
+ * SAP AI Core provider plugin
+ */
+const sapProviderPlugin: JupyterFrontEndPlugin<void> = {
+  id: '@jupyterlite/ai:sap-provider',
+  description: 'Register SAP AI Core provider',
+  autoStart: true,
+  requires: [IProviderRegistry],
+  activate: (app: JupyterFrontEnd, providerRegistry: IProviderRegistry) => {
+    providerRegistry.registerProvider(sapProvider);
   }
 };
 
@@ -951,6 +965,7 @@ export default [
   mistralProviderPlugin,
   openaiProviderPlugin,
   genericProviderPlugin,
+  sapProviderPlugin,
   settingsModel,
   diffManager,
   chatModelRegistry,
