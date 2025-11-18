@@ -61,7 +61,6 @@ export const sapProvider: IProviderInfo = {
     'mistralai--pixtral-large-instruct',
     'ibm--granite-13b-chat'
   ],
-  supportsBaseURL: true,
   factory: (options: IModelOptions) => {
     // Note: SAP provider is handled specially in agent.ts _createModel()
     // using createSAPAIProvider directly due to async OAuth token requirements.
@@ -72,7 +71,7 @@ export const sapProvider: IProviderInfo = {
     const model = options.model || 'gpt-4o';
     return createOpenAICompatible({
       name: 'sap',
-      baseURL: options.baseURL || 'https://api.ai.ml.hana.ondemand.com/v2',
+      baseURL: options.baseURL || '',
       apiKey: options.apiKey || '',
       headers: options.headers
     })(model);
